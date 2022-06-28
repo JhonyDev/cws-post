@@ -6,31 +6,49 @@
 {% block base_links %}{% endblock %}
 
 {% block content %}
-<style>
-    body{
-        background: rgb(31,31,31);
-        background: linear-gradient(90deg, rgba(31,31,31,1) 0%, rgba(71,67,67,1) 50%, rgba(31,31,31,1) 100%);
-}
+    <style>
+        body {
+            background: rgb(31, 31, 31);
+            background: linear-gradient(90deg, rgba(31, 31, 31, 1) 0%, rgba(71, 67, 67, 1) 50%, rgba(31, 31, 31, 1) 100%);
+        }
 
-body::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
+        body::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
 
-    body::-webkit-scrollbar-track {
-        background-color: #222222;
-    }
+        body::-webkit-scrollbar-track {
+            background-color: #222222;
+        }
 
-    body::-webkit-scrollbar-thumb {
-        background-color: #FEC506;
-        outline: 1px solid black;
-        border-radius: 5px;
-    }
-</style>
+        body::-webkit-scrollbar-thumb {
+            background-color: #FEC506;
+            outline: 1px solid black;
+            border-radius: 5px;
+        }
+    </style>
+
     <div class="row">
+        <div style="margin: 12px;">
+            {% if request.user.first_name %}
+                <h1 style="color: white;">Welcome! <span
+                        class="d-none d-xl-inline-block ml-1">{{ request.user.first_name }}</span></h1>
+            {% else %}
+                <h1 style="color: white;">Welcome! <span
+                        class="d-none d-xl-inline-block ml-1">{{ request.user.username }}</span></h1>
+            {% endif %}
+            <h6 style="color: white;">Post Office: <span
+                    class="d-none d-xl-inline-block ml-1">{{ request.user.city }}</span></h6>
+            <h6 style="color: white;">Postal Code: <span
+                    class="d-none d-xl-inline-block ml-1">{{ request.user.postal_code }}</span></h6>
+            <h6 style="color: white;">Email: <span class="d-none d-xl-inline-block ml-1">{{ request.user.email }}</span>
+            </h6>
 
+        </div>
         <div class="col-xl-12">
+
             <div class="row">
+
                 <div class="col-sm-3">
                     <div class="card mini-stats-wid">
                         <div class="card-body">

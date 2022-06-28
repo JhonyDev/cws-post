@@ -197,8 +197,7 @@ class TestView(View):
             x = User.objects.filter(postal_code=form.cleaned_data['postal_code'], is_superuser=True)
             new_parcel.destination_service_manager = x[0] if x else None
             new_parcel.save()
-            send_email.send_email(new_parcel.customer, "Your Parcel is is on the Way thanks for using PakEPost")
-            send_email.send_email(new_parcel.receiver, "Your Parcel is is on the Way thanks for using PakEPost")
+
             return redirect('admins:parcel')
         return render(request, 'admins/test.html', {'form': form})
 
@@ -239,7 +238,6 @@ class CityExistsJSON(View):
         return JsonResponse(data=response, safe=False)
 
 
-from . import send_email
 
 
 @method_decorator(admin_decorators, name='dispatch')
@@ -266,7 +264,6 @@ class AddUserView(View):
                     username=cnic, cnic=cnic, email=email, address=address, password=f'default@password',
                     is_active=True, is_customer=True, first_name=name, city=city
                 )
-                send_email.send_email(user, 'Your account has been created with above information')
                 messages.success(request, f"New user {user.first_name} created successfully")
             except IntegrityError:
                 messages.error(request, "Username email and cnic must be unique")
@@ -296,7 +293,6 @@ class AddSuperUserView(View):
                     postal_code=postal_code
                 )
                 user.save()
-                send_email.send_email(user, 'Your account has been created with above information')
                 messages.success(request, f"New admin user {user.first_name} created successfully")
                 return redirect('admins:user')
             except IntegrityError:
@@ -331,7 +327,6 @@ class AddPostmanUserView(View):
                     is_active=True, is_customer=False, first_name=name, is_postman=True, postal_code=postal_code
                 )
                 user.save()
-                send_email.send_email(user, 'Your account has been created with above information')
                 messages.success(request, f"New postman {user.first_name} created successfully")
                 return redirect('admins:user')
             except IntegrityError:
