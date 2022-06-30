@@ -117,14 +117,17 @@
             sender.blur(function () {
                 if ($(this).val() === '')
                     return;
-
+                console.log($(receiver).val());
+                console.log($(sender).val());
                 checking_sender = true;
-                if ($(this).val() === $(receiver).val()) {
+                if ($(sender).val() === $(receiver).val()) {
                     $(sender)[0].setCustomValidity("Sender and Receiver cannot be same!");
                     $(sender)[0].reportValidity();
                     $(sender)[0].style.borderColor = "red";
                     $(sender).val('');
                     return;
+                } else {
+                    $(sender)[0].setCustomValidity('');
                 }
                 get_c_api_call_user_exists('/a/json/user/' + $(this).val() + '/exists/')
             });
@@ -144,12 +147,16 @@
                 if ($(this).val() === '')
                     return;
                 checking_sender = false;
-                if ($(this).val() === $(sender).val()) {
+                console.log($(receiver).val());
+                console.log($(sender).val());
+                if ($(receiver).val() === $(sender).val()) {
                     $(receiver)[0].setCustomValidity("Sender and Receiver cannot be same!");
                     $(receiver)[0].reportValidity();
                     $(receiver)[0].style.borderColor = "red";
                     $(receiver).val('');
                     return;
+                } else {
+                    $(receiver)[0].setCustomValidity('');
                 }
                 get_c_api_call_user_exists('/a/json/user/' + $(this).val() + '/exists/')
             });
