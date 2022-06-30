@@ -123,6 +123,8 @@ class ParcelForm(forms.ModelForm):
                                                        'placeholder': 'Enter CNIC here'}))
     postal_code = forms.CharField(widget=TextInput(attrs={'type': 'number', 'placeholder': 'Postal code'}))
 
+    field_order = ['sender', 'receiver', 'postal_code', 'service_type', 'postal_charges', 'details']
+
     def __init__(self, *args, **kwargs):
         super(ParcelForm, self).__init__(*args, **kwargs)
         self.fields['sender'].title = 'Cnic must not include dashes. example format : 7145245856585'
@@ -236,8 +238,6 @@ class CityExistsJSON(View):
             'flag': flag,
         }
         return JsonResponse(data=response, safe=False)
-
-
 
 
 @method_decorator(admin_decorators, name='dispatch')
